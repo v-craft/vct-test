@@ -1,0 +1,28 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "x64-config",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/",
+      "installDir": "${sourceDir}/build/",
+      "cacheVariables": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "VCT_ENABLE_TEST_TEST":  "ON",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-ninja-debug",
+      "displayName": "x64 build debug",
+      "configurePreset": "x64-config",
+      "configuration": "Debug"
+    }
+  ]
+}

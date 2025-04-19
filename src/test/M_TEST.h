@@ -1,7 +1,7 @@
 #pragma once
 #ifndef VCT_TEST_TEST_H
 #define VCT_TEST_TEST_H
-import Test;
+import Vct.Test;
 
 
 // 注册宏

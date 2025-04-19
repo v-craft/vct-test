@@ -1,4 +1,4 @@
-export module Test;
+export module Vct.Test;
 
 export import std;
 
@@ -16,6 +16,7 @@ export namespace Test{
         explicit ExpectException(std::string const& msg) : std::runtime_error(msg) {}
     };
 
+
     // 测试用例结构
     struct TestCase {
         std::string name{};
@@ -27,6 +28,7 @@ export namespace Test{
         static std::vector<TestCase> registry;
         return registry;
     }
+
 
     inline void start_test() {
         size_t passed = 0;
