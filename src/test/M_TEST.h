@@ -19,23 +19,23 @@ import Vct.Test;
 
 //////////////////////////////////////////////
 //// EXPECT 宏
-#define M_EXPECT_NO_THROW(statement) \
+#define M_EXPECT_NO_THROW(...) \
     do{    \
         try{    \
-            statement;    \
+            __VA_ARGS__;    \
         }catch(...){    \
-            throw Vct::Test::ExpectException( #statement " thrown exception"); \
+            throw Vct::Test::ExpectException( #__VA_ARGS__ " thrown exception"); \
         }    \
     }while(false)
 
-#define M_EXPECT_ANY_THROW(statement) \
+#define M_EXPECT_ANY_THROW(...) \
     do{    \
         try{    \
-            statement;    \
+            __VA_ARGS__;    \
         }catch(...){    \
             break;    \
         }    \
-        throw Vct::Test::ExpectException( #statement " no exception thrown"); \
+        throw Vct::Test::ExpectException( #__VA_ARGS__ " no exception thrown"); \
     }while(false)
 
 #define M_EXPECT_THROW(statement, Exception) \
@@ -84,7 +84,27 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 != val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " == " #val2 ); \
+            else throw Vct::Test::ExpectException( #val1 " != " #val2 ); \
+        }catch(const std::exception& e){    \
+            throw Vct::Test::ExpectException(e.what());    \
+        }    \
+    }while(false)
+
+#define M_EXPECT_FLOAT_EQ(val1, val2, dv) \
+    do{    \
+        try{    \
+            if(std::abs(val1 - val2) <= dv) break;   \
+            else throw Vct::Test::ExpectException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
+        }catch(const std::exception& e){    \
+            throw Vct::Test::ExpectException(e.what());    \
+        }    \
+    }while(false)
+
+#define M_EXPECT_FLOAT_NE(val1, val2, dv) \
+    do{    \
+        try{    \
+            if(std::abs(val1 - val2) > dv) break;   \
+            else throw Vct::Test::ExpectException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
         }catch(const std::exception& e){    \
             throw Vct::Test::ExpectException(e.what());    \
         }    \
@@ -115,7 +135,7 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 > val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " <= " #val2 ); \
+            else throw Vct::Test::ExpectException( #val1 " <= " # val2 ); \
         }catch(std::exception const& e){    \
             throw Vct::Test::ExpectException(e.what());    \
         }    \
@@ -125,7 +145,7 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 >= val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " < " #val2 ); \
+            else throw Vct::Test::ExpectException( #val1 " < " # val2 ); \
         }catch(std::exception const& e){    \
             throw Vct::Test::ExpectException(e.what());    \
         }    \
@@ -134,23 +154,23 @@ import Vct.Test;
 
 //////////////////////////////////////////////
 //// ASSERT 宏
-#define M_ASSERT_NO_THROW(statement) \
+#define M_ASSERT_NO_THROW(...) \
     do{    \
         try{    \
-            statement;    \
+            __VA_ARGS__;    \
         }catch(...){    \
-            throw Vct::Test::AssertException( #statement " thrown exception"); \
+            throw Vct::Test::AssertException( #__VA_ARGS__ " thrown exception"); \
         }    \
     }while(false)
 
-#define M_ASSERT_ANY_THROW(statement) \
+#define M_ASSERT_ANY_THROW(...) \
     do{    \
         try{    \
-            statement;    \
+            __VA_ARGS__;    \
         }catch(...){    \
             break;    \
         }    \
-        throw Vct::Test::AssertException( #statement " no exception thrown"); \
+        throw Vct::Test::AssertException( #__VA_ARGS__ " no exception thrown"); \
     }while(false)
 
 #define M_ASSERT_THROW(statement, Exception) \
@@ -205,6 +225,25 @@ import Vct.Test;
         }    \
     }while(false)
 
+#define M_ASSERT_FLOAT_EQ(val1, val2, dv) \
+    do{    \
+        try{    \
+            if(std::abs(val1 - val2) <= dv) break;   \
+            else throw Vct::Test::AssertException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
+        }catch(const std::exception& e){    \
+            throw Vct::Test::AssertException(e.what());    \
+        }    \
+    }while(false)
+
+#define M_ASSERT_FLOAT_NE(val1, val2, dv) \
+    do{    \
+        try{    \
+            if(std::abs(val1 - val2) > dv) break;   \
+            else throw Vct::Test::AssertException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
+        }catch(const std::exception& e){    \
+            throw Vct::Test::AssertException(e.what());    \
+        }    \
+    }while(false)
 
 #define M_ASSERT_LT(val1, val2) \
     do{    \
@@ -245,6 +284,7 @@ import Vct.Test;
             throw Vct::Test::AssertException(e.what());    \
         }    \
     }while(false)
+
 
 
 #endif //VCT_TEST_TEST_H

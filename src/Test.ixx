@@ -2,34 +2,52 @@ export module Vct.Test;
 
 export import std;
 
-namespace Vct {
 
-export namespace Test{
-
+/**
+ * @namespace Vct::Test
+ * @brief V-Creator 单元测试库
+ * @author Mysvac
+ */
+export namespace Vct::Test{
+    /**
+     * @exception AssertException
+     * @brief 断言异常，抛出时直接结束测试
+     */
     class AssertException final : public std::runtime_error {
     public:
         explicit AssertException(std::string const& msg) : std::runtime_error(msg) {}
     };
 
+    /**
+     * @exception ExpectException
+     * @brief 预期异常，抛出时对应的测试案例失败，继续执行其他测试
+     */
     class ExpectException final : public std::runtime_error {
     public:
         explicit ExpectException(std::string const& msg) : std::runtime_error(msg) {}
     };
 
 
-    // 测试用例结构
+    /**
+     * @class TestCase
+     * @brief 测试个例
+     */
     struct TestCase {
         std::string name{};
         std::function<void()> func{};
     };
 
-    // 全局测试注册表
+    /**
+     * @brief 全局单例，用于存放测试个例
+     */
     inline std::vector<TestCase>& get_test_registry() {
         static std::vector<TestCase> registry;
         return registry;
     }
 
-
+    /**
+     * @brief 启动测试
+     */
     inline void start_test() {
         size_t passed = 0;
         std::vector<TestCase>& tests = get_test_registry();
@@ -85,7 +103,5 @@ export namespace Test{
 
         std::cout << "================end================" << std::endl;
     }
-
-}
 
 }
