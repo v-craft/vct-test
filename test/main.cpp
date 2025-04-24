@@ -17,6 +17,8 @@ M_TEST(Expect, Throw){
 }
 
 M_TEST(Expect, Eq) {
+    M_EXPECT_TRUE( true );
+    M_EXPECT_FALSE( false );
     M_EXPECT_EQ(1, 1);
     M_EXPECT_NE(1, 2);
     M_EXPECT_FLOAT_EQ(1.05, 1.04, 0.02);
@@ -28,6 +30,8 @@ M_TEST(Expect, Eq) {
     M_EXPECT_GE(2, 1);
     M_EXPECT_GE(1, 1);
 
+    M_EXPECT_ANY_THROW( M_EXPECT_TRUE( false ) );
+    M_EXPECT_ANY_THROW( M_EXPECT_FALSE( true ) );
     M_EXPECT_ANY_THROW( M_EXPECT_FLOAT_EQ(1.05, 1.04, 0.002) );
     M_EXPECT_ANY_THROW( M_EXPECT_FLOAT_NE(1.177, 1.176, 0.01) );
     M_EXPECT_ANY_THROW( M_EXPECT_EQ(1, 2) );
@@ -52,6 +56,8 @@ M_TEST(Assert, Throw){
 }
 
 M_TEST(Assert, Eq) {
+    M_ASSERT_TRUE( true );
+    M_ASSERT_FALSE( false );
     M_ASSERT_EQ(1, 1);
     M_ASSERT_NE(1, 2);
     M_ASSERT_FLOAT_EQ(1.05, 1.04, 0.02);
@@ -63,6 +69,8 @@ M_TEST(Assert, Eq) {
     M_ASSERT_GE(2, 1);
     M_ASSERT_GE(1, 1);
 
+    M_ASSERT_ANY_THROW( M_ASSERT_TRUE( false ) );
+    M_ASSERT_ANY_THROW( M_ASSERT_FALSE( true ) );
     M_ASSERT_ANY_THROW( M_ASSERT_FLOAT_EQ(1.05, 1.04, 0.002) );
     M_ASSERT_ANY_THROW( M_ASSERT_FLOAT_NE(1.177, 1.176, 0.01) );
     M_EXPECT_ANY_THROW( M_ASSERT_EQ(1, 2) );

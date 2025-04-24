@@ -1,14 +1,13 @@
-export module Vct.Test;
+export module Vct.Test.Unit;
 
 export import std;
 
-
 /**
- * @namespace Vct::Test
+ * @namespace Vct::Test::Unit
  * @brief V-Creator 单元测试库
  * @author Mysvac
  */
-export namespace Vct::Test{
+export namespace Vct::Test::Unit{
     /**
      * @exception AssertException
      * @brief 断言异常，抛出时直接结束测试

@@ -1,7 +1,7 @@
 #pragma once
-#ifndef VCT_TEST_TEST_H
-#define VCT_TEST_TEST_H
-import Vct.Test;
+#ifndef VCT_TEST_UNIT_M_TEST_H
+#define VCT_TEST_UNIT_M_TEST_H
+import Vct.Test.Unit;
 
 
 // 注册宏
@@ -9,7 +9,7 @@ import Vct.Test;
     void test_##test_suite##_##test_name(); \
     struct TestRegistrar_##test_suite##_##test_name { \
             TestRegistrar_##test_suite##_##test_name() { \
-                Vct::Test::get_test_registry().push_back({ \
+                Vct::Test::Unit::get_test_registry().push_back({ \
                     #test_suite "." #test_name, \
                     &test_##test_suite##_##test_name \
                 }); \
@@ -24,7 +24,7 @@ import Vct.Test;
         try{    \
             __VA_ARGS__;    \
         }catch(...){    \
-            throw Vct::Test::ExpectException( #__VA_ARGS__ " thrown exception"); \
+            throw Vct::Test::Unit::ExpectException( #__VA_ARGS__ " thrown exception"); \
         }    \
     }while(false)
 
@@ -35,7 +35,7 @@ import Vct.Test;
         }catch(...){    \
             break;    \
         }    \
-        throw Vct::Test::ExpectException( #__VA_ARGS__ " no exception thrown"); \
+        throw Vct::Test::Unit::ExpectException( #__VA_ARGS__ " no exception thrown"); \
     }while(false)
 
 #define M_EXPECT_THROW(statement, Exception) \
@@ -45,28 +45,28 @@ import Vct.Test;
         }catch(const Exception&){    \
             break;    \
         }catch(...){    \
-            throw Vct::Test::ExpectException( #statement " exception thrown but not match"); \
+            throw Vct::Test::Unit::ExpectException( #statement " exception thrown but not match"); \
         }    \
-        throw Vct::Test::ExpectException( #statement " no exception thrown"); \
+        throw Vct::Test::Unit::ExpectException( #statement " no exception thrown"); \
     }while(false)
 
 #define M_EXPECT_TRUE(condition) \
     do{    \
         try{    \
             if(condition) break;   \
-            else throw Vct::Test::ExpectException( #condition " return false"); \
+            else throw Vct::Test::Unit::ExpectException( #condition " return false"); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
 #define M_EXPECT_FALSE(condition) \
     do{    \
         try{    \
-            if(condition) Vct::Test::ExpectException( #condition " return true"); \
+            if(condition) throw Vct::Test::Unit::ExpectException( #condition " return true"); \
             else break; \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -74,9 +74,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 == val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " != " #val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " != " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -84,9 +84,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 != val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " != " #val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " != " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -94,9 +94,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(std::abs(val1 - val2) <= dv) break;   \
-            else throw Vct::Test::ExpectException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
+            else throw Vct::Test::Unit::ExpectException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -104,9 +104,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(std::abs(val1 - val2) > dv) break;   \
-            else throw Vct::Test::ExpectException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
+            else throw Vct::Test::Unit::ExpectException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -115,9 +115,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 < val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " >= " #val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " >= " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -125,9 +125,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 <= val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " > " #val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " > " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -135,9 +135,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 > val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " <= " # val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " <= " # val2 ); \
         }catch(std::exception const& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -145,9 +145,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 >= val2) break;   \
-            else throw Vct::Test::ExpectException( #val1 " < " # val2 ); \
+            else throw Vct::Test::Unit::ExpectException( #val1 " < " # val2 ); \
         }catch(std::exception const& e){    \
-            throw Vct::Test::ExpectException(e.what());    \
+            throw Vct::Test::Unit::ExpectException(e.what());    \
         }    \
     }while(false)
 
@@ -159,7 +159,7 @@ import Vct.Test;
         try{    \
             __VA_ARGS__;    \
         }catch(...){    \
-            throw Vct::Test::AssertException( #__VA_ARGS__ " thrown exception"); \
+            throw Vct::Test::Unit::AssertException( #__VA_ARGS__ " thrown exception"); \
         }    \
     }while(false)
 
@@ -170,7 +170,7 @@ import Vct.Test;
         }catch(...){    \
             break;    \
         }    \
-        throw Vct::Test::AssertException( #__VA_ARGS__ " no exception thrown"); \
+        throw Vct::Test::Unit::AssertException( #__VA_ARGS__ " no exception thrown"); \
     }while(false)
 
 #define M_ASSERT_THROW(statement, Exception) \
@@ -180,28 +180,28 @@ import Vct.Test;
         }catch(const Exception&){    \
             break;    \
         }catch(...){    \
-            throw Vct::Test::AssertException( #statement " exception thrown but not match"); \
+            throw Vct::Test::Unit::AssertException( #statement " exception thrown but not match"); \
         }    \
-        throw Vct::Test::AssertException( #statement " no exception thrown"); \
+        throw Vct::Test::Unit::AssertException( #statement " no exception thrown"); \
     }while(false)
 
 #define M_ASSERT_TRUE(condition) \
     do{    \
         try{    \
             if(condition) break;   \
-            else throw Vct::Test::AssertException( #condition " return false"); \
+            else throw Vct::Test::Unit::AssertException( #condition " return false"); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
 #define M_ASSERT_FALSE(condition) \
     do{    \
         try{    \
-            if(condition) Vct::Test::AssertException( #condition " return true"); \
+            if(condition) throw Vct::Test::Unit::AssertException( #condition " return true"); \
             else break; \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -209,9 +209,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 == val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " != " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " != " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -219,9 +219,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 != val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " == " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " == " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -229,9 +229,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(std::abs(val1 - val2) <= dv) break;   \
-            else throw Vct::Test::AssertException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
+            else throw Vct::Test::Unit::AssertException( "std::abs( " #val1 " - " # val2 " ) > " #dv ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -239,9 +239,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(std::abs(val1 - val2) > dv) break;   \
-            else throw Vct::Test::AssertException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
+            else throw Vct::Test::Unit::AssertException( "std::abs( " #val1 " - " # val2 " ) <= " #dv ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -249,9 +249,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 < val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " >= " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " >= " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -259,9 +259,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 <= val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " > " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " > " #val2 ); \
         }catch(const std::exception& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -269,9 +269,9 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 > val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " <= " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " <= " #val2 ); \
         }catch(std::exception const& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
@@ -279,12 +279,12 @@ import Vct.Test;
     do{    \
         try{    \
             if(val1 >= val2) break;   \
-            else throw Vct::Test::AssertException( #val1 " < " #val2 ); \
+            else throw Vct::Test::Unit::AssertException( #val1 " < " #val2 ); \
         }catch(std::exception const& e){    \
-            throw Vct::Test::AssertException(e.what());    \
+            throw Vct::Test::Unit::AssertException(e.what());    \
         }    \
     }while(false)
 
 
 
-#endif //VCT_TEST_TEST_H
+#endif // VCT_TEST_UNIT_M_TEST_H
