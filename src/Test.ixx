@@ -14,7 +14,7 @@ export namespace Vct::Test::Unit{
      */
     class AssertException final : public std::runtime_error {
     public:
-        explicit AssertException(std::string const& msg) : std::runtime_error(msg) {}
+        AssertException(std::string const& msg) : std::runtime_error(msg) {}
     };
 
     /**
@@ -23,7 +23,7 @@ export namespace Vct::Test::Unit{
      */
     class ExpectException final : public std::runtime_error {
     public:
-        explicit ExpectException(std::string const& msg) : std::runtime_error(msg) {}
+        ExpectException(std::string const& msg) : std::runtime_error(msg) {}
     };
 
 
